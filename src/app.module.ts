@@ -6,16 +6,18 @@ import { ProductsController } from './products.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 import { Product } from './products.model';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'alura_nestjs',
+      host: process.env.db_host,
+      port: Number(process.env.db_port),
+      username: process.env.db_username,
+      password: process.env.db_password,
+      database: process.env.db_database,
       autoLoadModels: true,
       synchronize: true,
     }),
